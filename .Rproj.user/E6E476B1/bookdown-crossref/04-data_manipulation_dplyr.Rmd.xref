@@ -1,0 +1,9 @@
+h1:data-manipulation-with-dplyr Data Manipulation with dplyr
+h2:select select()
+h2:filter filter()
+h2:arrange arrange()
+h2:mutate mutate()
+h2:group_by-and-summarise group_by() and summarise()
+h2:join join()
+h2:pivot_wider-and-pivot_longer-in-tidyr pivot_wider() and pivot_longer() in tidyr
+

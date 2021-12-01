@@ -1,0 +1,20 @@
+h1:data-visualization-with-ggplot2 Data Visualization with ggplot2
+h2:grammar-of-graphics-gg Grammar of Graphics (gg)
+h2:data-aesthetics-and-geometries Data, Aesthetics, and Geometries
+h3:scatter-plot Scatter plot
+h3:bar-plot Bar plot
+h3:line-plot Line plot
+h3:boxplot Boxplot
+h3:pie-chart Pie chart
+h2:facets Facets
+h2:coordinates Coordinates
+h3:zooming-in-and-out Zooming in and out
+h3:ratio Ratio
+h3:swaping-the-axes Swaping the axes
+h3:polar-coordinate-system Polar coordinate system
+h2:themes Themes
+h3:add-labels Add labels
+h3:change-ticks Change ticks
+h3:theme-function theme() function
+h2:save-plot Save plot
+

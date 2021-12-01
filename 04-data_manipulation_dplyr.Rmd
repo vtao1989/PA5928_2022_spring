@@ -1,0 +1,404 @@
+# Data Manipulation with dplyr
+
+In this chapter, we will learn a very popular package ``dplyr`` to deal with data manipulation. We will mainly go through its main functions [@biomed1;@rpro1].
+
+## select()
+
+Before the lecture, install the package in your computer.
+
+```{r eval=FALSE}
+install.packages('dplyr') ## you only need to install this package once
+```
+
+
+Let's first import this package. Also, we import the Minneapolis ACS dataset.
+
+```{r message = FALSE}
+library(dplyr)
+minneapolis <- read.csv('minneapolis.csv')
+```
+
+If we want to select one or more columns (i.e., variables) from the dataset. We could use ``select()`` in ``dplyr``. It is similar to ``subset()`` , but here, you do not need to use ``select = c('mpg', 'disp')``. You use the names of the columns directly in the function.
+
+```{r}
+df <- select(minneapolis, # name of the data frame
+       YEAR, SEX, AGE) # column/variable names you want to select
+head(df, 3)
+```
+
+You could also use the index of the columns.
+
+```{r}
+df <- select(minneapolis, # name of the data frame
+       c(1:3)) # index of the columns/variables you want to select
+head(df, 3)
+```
+
+**pipe**  
+
+The codes above is kind of a *traditional* way to do the work. We start with a function and put parameters in the function. However, this is not the typical way to use ``dplyr``.
+
+The codes below is a more ``dplyr`` way people use the package. We start with the name of the data frame. Then, we put a special sign ``%>%`` called ``pipe`` after it. We continue from a new line and write the function we want to use. Besides that, we could add more functions with the pipe operator. For example, only show first three observations with ``head()``.
+
+```{r}
+minneapolis %>% # name of the data frame
+  select(YEAR, SEX, AGE) %>% # select the columns by their names
+  head(3)
+```
+
+The original codes include more (see below). When comparing the codes above and below, you will find that original codes use ``.`` as the input of the data frame in the function. However, for easy coding, this ``.`` could be omitted if it is in the starting position among the input parameters in the functions. In other words, if this ``.`` is not in the starting position, it cannot be omitted.
+
+```{r}
+minneapolis %>% 
+  select(., YEAR, SEX, AGE) %>% 
+  head(., 3)
+```
+
+You can also write the codes in only one line, just like the codes below. However, **it is recommended to write codes with one function in one line to improve the readiness of the codes**.
+
+```{r}
+minneapolis %>% select(YEAR, SEX, AGE) %>% head(3)
+```
+
+The pipe operation is named after the art work, *This is not a pipe*, from René Magritte.
+
+<center>
+![](Pics/MagrittePipe.jpg)
+</center>
+
+We will keep using the fashion of pipe in the following lectures. In addition, you can use ``Ctrl + Shift + M`` in RStudio to quickly input the pipe operator.
+
+Besides selecting some columns you want, you could also exclude the columns you do not want by putting a negative sign ``-`` before the variable.
+
+```{r}
+minneapolis %>%
+  select(-HISPAN, - FTOTINC) %>% ## exclude HISPAN and FTOTINC from the data frame
+  head(3)
+```
+
+You could use ``:`` to select a range of variables.
+
+```{r}
+minneapolis %>%
+  select(YEAR:RACE) %>% # select from YEAR to RACE in the data frame
+  head(3)
+```
+
+Or exclude a range of variables.
+
+```{r}
+minneapolis %>%
+  select(-(YEAR:RACE)) %>% # exclude the variables from YEAR to RACE in the data frame
+  head(3)
+```
+
+Below are some advanced techniques to select columns.
+
+You can select the column with their names starting with the string(s) you specify in ``starts_with()``. For example, the codes below select the columns with names starting with ``E``.
+
+```{r}
+minneapolis %>% 
+  select(starts_with('E')) %>% 
+  head(3)
+```
+It may not make sense to you at first. I apologize that the example above is not a good one. In my experience, I have dealt with a traffic dataset that contains variables such as ``AADT_2010``, ``AADT_2011``, ``AADT_2012``, ``AADT_2013``, ``AADT_2014``, ``AADT_2015``. In this case, you can use codes like ``select(starts_with('AADT'))`` to select all similar columns.
+
+Since we have ``starts_with()``, you may be wondering it there is ``ends_with()``. The answer is yes.
+
+```{r}
+minneapolis %>% 
+  select(ends_with('E')) %>% 
+  head(3)
+```
+
+You can use ``contains()`` to select the columns containing the string(s) you specify.
+
+```{r}
+minneapolis %>% 
+  select(contains('INC')) %>% 
+  head(3)
+```
+
+Other similar functions include ``num_range()``, ``matches()``, ``one_of()``, etc. Feel free to check how they can be used with ``help()``.
+
+## filter()
+
+In ``dplyr``, we use ``filter()`` to select the rows satisfying some conditions.
+
+```{r}
+minneapolis %>%
+  filter(YEAR == 2015) %>% 
+  head(3)
+```
+
+Add more conditions by using ``,`` to separate them.
+
+```{r}
+minneapolis %>%
+  filter(YEAR == 2015,
+         AGE == 37,
+         SEX == 1) %>% 
+  head(3)
+```
+
+```{r}
+minneapolis %>%
+  filter(YEAR == 2015,
+         INCTOT > mean(INCTOT, na.rm = T)) %>% ## select those with an above-average personal income
+  head(3)
+```
+``,`` serves as an ``logical and`` here. Instead, you can use ``&``.
+
+```{r}
+minneapolis %>%
+  filter(YEAR == 2015 & INCTOT > mean(INCTOT, na.rm = T)) %>% 
+  head(3)
+```
+You may use ``|`` to stand for ``logical or``.
+
+```{r}
+minneapolis %>%
+  filter(YEAR == 2015 | YEAR == 2017) %>% ## select those in 2015 or 2017
+  head()
+```
+
+
+## arrange()
+
+We could arrange the order of some columns by ``arrange()`` functions.
+
+```{r}
+minneapolis %>%
+  arrange(YEAR) %>% # arrange YEAR in ascending order
+  head(5)
+```
+
+Or maybe we want ``YEAR`` to be in a descending order. Just put a ``desc()`` outside the variable.
+
+```{r}
+minneapolis %>%
+  arrange(desc(YEAR)) %>%
+  head(5)
+```
+
+We could put them together by using pipe operators to connect them.
+
+```{r}
+minneapolis %>%
+  filter(YEAR == 2010) %>% ## filter rows
+  select(YEAR, SEX, AGE) %>% ## select columns
+  arrange(desc(SEX), AGE) %>% ## arrange order
+  head(5) ## show the first 5 observations
+```
+
+## mutate()
+
+We use ``mutate()`` to do operation among the variables and create a new column to store them.
+
+```{r}
+minneapolis %>%
+  select(INCTOT) %>% 
+  mutate(INCTOTK = INCTOT/1000) %>% ## transfer the unit of personal income from dollar to k dollar
+  head(5)
+```
+
+You can include more than one assignment operations in ``mutate()``.
+
+```{r}
+minneapolis %>%
+  select(INCTOT, FTOTINC) %>% 
+  mutate(INCTOTK = INCTOT/1000,
+         FTOTINCK = FTOTINC/1000) %>%
+  head(10)
+```
+
+You can use ``ifelse()`` to change the value satisfying the specified condition. ``if_else()`` works but is more strict in variable types. See its help page for more information.
+
+```{r}
+minneapolis %>% 
+  mutate(
+    SEX = ifelse(SEX == 1, 'Male', 'Female') ## change the value of SEX from 1 to Male, otherwise, Female
+  ) %>% 
+  head(5)
+```
+
+If you have more than one conditions, you can use ``case_when()``.
+
+```{r}
+minneapolis %>% 
+  mutate(
+    RACE = case_when( ## change RACE from numeric values to racial categories
+      RACE == 1 ~ 'White',
+      RACE == 2 ~ 'African American',
+      RACE == 3 ~ 'Other'
+    )
+  ) %>% 
+  head(5)
+```
+
+```{r}
+minneapolis %>% 
+  mutate(
+    IncLevl = case_when( ## categorize personal income into three levels
+      INCTOT < median(INCTOT, na.rm = T) ~ 'Low income',
+      INCTOT > median(INCTOT, na.rm = T) ~ 'High income',
+      TRUE ~ 'Median income'
+    )
+  ) %>% 
+  head(5)
+```
+
+
+## group_by() and summarise()
+
+We use ``group_by()`` to do aggregation (group the observations based the values of one or one more columns) work and ``summarise()`` to calculate some statistics related to each group. Below is a plot to show how it works.
+
+<center>
+![](Pics/group.jpg)
+</center>
+
+```{r, eval=FALSE}
+dataset %>% 
+  group_by(Name) %>% 
+  summarise(TotalSocre = sum(Score))
+```
+
+When it comes to our Minneapolis ACS dataset, we can use the combination of ``group_by()`` and ``summarise()`` to help use with many tasks.
+
+```{r}
+minneapolis %>%
+  group_by(YEAR) %>%  ## aggregate the data based on YEAR
+  summarise(count = n(), ## number of respondents in each year
+            AvgInc = mean(INCTOT, na.rm = T)) ## average personal income in each year
+```
+
+```{r, message=FALSE}
+minneapolis %>%
+    mutate(
+    RACE = case_when( ## change RACE from numeric values to racial categories
+      RACE == 1 ~ 'White',
+      RACE == 2 ~ 'African American',
+      RACE == 3 ~ 'Other'
+    )
+  ) %>% 
+  group_by(YEAR, RACE) %>% ## aggregate the data based on YEAR and RACE
+  summarise(MaxInc = max(INCTOT, na.rm = T)) ## maximum personal income for different racial groups in each year
+```
+
+## join()
+
+We could use ``join()`` to do the same work of ``merge()``.
+
+```{r}
+Name <- c('A', 'B', 'C') # create variable Name
+MathScore <- c(87, 98, 95) # create variable Score1
+df1 <- data.frame(Name, MathScore) # combine the variables into one data frame
+df1
+
+Name <- c('B', 'D', 'C', 'A') # create variable Name
+PhysicsScore <- c(99, 66, 98, 77) # create variable Score2
+df2 <- data.frame(Name, PhysicsScore) # combine the variables into one data frame
+df2
+```
+
+```{r warning = F}
+df1 %>%
+  left_join(df2, by = 'Name')
+```
+
+```{r warning = F}
+df1 %>%
+  right_join(df2, by = 'Name')
+```
+
+Could you tell the difference between ``left_join()`` and ``right_join()``?
+
+<center>
+![](Pics/join1.jpg)
+</center>
+
+Besides ``left_join()`` and ``right_join()``, we have ``inner_join()`` (keep only matched observations of two data frames) and ``full_join()`` (keep all observations of two data frames).
+
+<center>
+![](Pics/join2.jpg)
+</center>
+
+The codes below joins the poverty threshold dataset to the Minneapolis ACS dataset.
+
+```{r}
+## import poverty threshold dataset
+poverty <- read.csv('poverty.csv')
+
+head(poverty, 10)
+```
+
+The poverty threshold dataset lists the poverty threshold in terms of personal income in the US from 2010 to 2019. The data was retrieved from this  [link](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html)
+
+
+```{r}
+## join the poverty threshold dataset to the Minneapolis ACS dataset based on YEAR
+minneapolis %>% 
+  left_join(poverty, by = 'YEAR') %>% 
+  head(10)
+```
+
+Sometimes, people from different groups may give the same variables with different variable names. In this case, you may need to change the codes a little bit.
+
+```{r}
+minneapolis %>% 
+  rename(TIME = YEAR) %>% ## rename the YEAR to TIME
+  left_join(poverty, by = c('TIME' = 'YEAR')) %>% ## join the data based on different column names
+  head(10)
+```
+
+``rename()`` can help rename the column name in the data frame.
+
+## pivot_wider() and pivot_longer() in tidyr
+
+We can categorize the data frame into two types. One is long data, the other is wide data. In the long form, each row is a score of one discipline for one student. In the wide form, each row contains the scores of all three disciplines for one student.
+
+<center>
+![](Pics/long_wide.jpg){ width=75% }
+</center>
+
+The long form and wide form data can be transformed to each other. We will use the example below as an illustration.
+
+```{r, message=FALSE}
+max_income <- minneapolis %>%
+    mutate(
+    RACE = case_when( ## change RACE from numeric values to racial categories
+      RACE == 1 ~ 'White',
+      RACE == 2 ~ 'African American',
+      RACE == 3 ~ 'Other'
+    )
+  ) %>% 
+  group_by(YEAR, RACE) %>% ## aggregate the data based on YEAR and RACE
+  summarise(MaxInc = max(INCTOT, na.rm = T)) ## maximum personal income for different racial groups in each year
+
+head(max_income, 10)
+```
+
+We will use ``pivot_wider()`` and ``pivot_longer()`` in ``tidyr`` package to do the task.
+
+```{r}
+## import the package
+library(tidyr)
+```
+
+```{r}
+## from long to wide
+wide_data <- max_income %>% 
+  pivot_wider(names_from = RACE, values_from = MaxInc)
+
+wide_data
+```
+
+```{r}
+## from wide to long
+wide_data %>% 
+  pivot_longer(cols = `African American`:White, names_to = 'RACE', values_to = 'MaxInc')
+```
+
+
+
+

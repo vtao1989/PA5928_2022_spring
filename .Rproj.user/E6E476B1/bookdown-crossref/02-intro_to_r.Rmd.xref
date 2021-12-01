@@ -1,0 +1,14 @@
+h1:introduction-to-r Introduction to R
+h2:why-r-and-why-not-r Why R and why not R?
+h2:variable-name Variable name
+h2:variable-types Variable types
+h2:operations Operations
+h3:assignment-operations Assignment operations
+h3:arithmetic-operations Arithmetic operations
+h3:relational-operations Relational operations
+h3:logical-operations Logical operations
+h2:data-structures Data structures
+h2:conditional-statement-if Conditional statement (if)
+h2:loops Loops
+h2:functions Functions
+

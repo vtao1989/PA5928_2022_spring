@@ -1,0 +1,358 @@
+
+# Statistics in R
+
+In this chapter, we are going to use R to add the statistics in the plots and carry out statistical analysis.
+
+We need ``dplyr``, ``ggplot2``, and the Minneapolis ACS dataset.
+
+```{r, message=FALSE}
+library(dplyr) 
+library(ggplot2)
+minneapolis <- read.csv('minneapolis.csv')
+```
+
+
+## Plotting statistics
+
+### Fitting the general trend of points
+
+You could fit a line to see the general trend of the scatter plot by using ``stat_smooth()`` in ``ggplot2``.
+
+```{r}
+## select observations from 2017
+minneapolis_2017 <- filter(minneapolis, YEAR == 2017)
+
+p <- ggplot(minneapolis_2017, aes(AGE, INCTOT)) +
+  geom_point() 
+
+p + stat_smooth(method = 'lm') # fit a linear line for the points
+```
+
+```{r}
+p + stat_smooth(method = 'loess') # non-linear line
+```
+
+It seems that the non-linear relationship makes more sense.
+
+### Plotting distribution
+
+You could draw a histogram for the dataset with ``geom_histogram()``. With the argument of ``binwidth``, we can set the width of the bin.
+
+```{r}
+p <- ggplot(minneapolis_2017, aes(AGE))
+
+p + geom_histogram(binwidth = 5) # the width of each category is 5
+```
+
+Instead of the width of the bin, we could set number of the bins with ``bins``.
+
+```{r}
+p +  geom_histogram(bins = 30) # the number of bins is 30
+```
+
+By setting ``aes(y = ..density..)`` in ``geom_histogram()``, the plot shows density instead of counts.
+
+```{r}
+p +  geom_histogram(aes( y = ..density..), bins = 30) # use density instead of count
+```
+
+### Density plot of distribution
+
+You could fit a density line for the histogram, which is a smooth line shows the distribution of the data.
+
+```{r}
+p + geom_histogram(aes( y = ..density..), binwidth = 5) + 
+  geom_density(alpha = 0.2, fill = 'Grey') 
+```
+
+``geom_freqpoly()`` can serve a same purpose.
+
+```{r}
+p + geom_freqpoly(binwidth = 5)
+```
+
+### Box plot of distribution
+
+Another way to show more statistics about your data is box plot, which we have introduced before.
+
+```{r}
+p <- ggplot(minneapolis_2017, aes(factor(SEX), INCTOT))
+p + geom_boxplot()
+```
+
+## Annotation of statistics
+
+We can use ``geom_text()`` to annotate the statistics in the plot.
+
+### bar plot
+
+```{r}
+ggplot(minneapolis_2017, aes(x = RACE)) +
+  geom_bar() +
+  geom_text(aes(label = ..count..), stat = 'count', vjust = 1.5, colour = 'white')
+```
+
+```{r}
+## count the number of respondents based on RACE
+minneaplis_race <- minneapolis_2017 %>% 
+  group_by(RACE) %>% 
+  summarise(count = n())
+
+ggplot(minneaplis_race, aes(RACE, count)) +
+  geom_col() +
+  geom_text(aes(label = count), vjust = -0.3)
+```
+
+### line plot
+
+```{r}
+## calculate the average personal income for each year
+minneapolis_year <- minneapolis %>% 
+  group_by(YEAR) %>% 
+  summarise(AvgInc = mean(INCTOT, na.rm = T))
+
+ggplot(minneapolis_year, aes(YEAR, AvgInc)) +
+  geom_line(linetype= 'dashed') +
+  geom_point() +
+  geom_text(aes(label = round(AvgInc)), vjust = -0.5)
+```
+
+```{r message=FALSE}
+## calculate the average personal income for each racial group in each year
+minneapolis_year_race <- minneapolis %>% 
+  group_by(YEAR, RACE) %>% 
+  summarise(AvgInc = mean(INCTOT, na.rm = T))
+
+## line plot of the trend of average personal income
+ggplot(minneapolis_year_race, aes(YEAR, AvgInc, linetype = factor(RACE))) +
+  geom_line() +
+  geom_text(aes(label = round(AvgInc)), vjust = -0.4)
+```
+
+## Simple statistics
+
+We have covered some of the functions in this topic. For example, we could use ``mean()`` to compute the average value of a set of numbers.
+
+### Mean and median
+
+We could use the base functions to do some simple statistical analysis directly.
+
+```{r}
+mean(minneapolis_2017$AGE) # mean
+median(minneapolis_2017$AGE) # median
+```
+
+### Minimum and maximum value
+
+```{r}
+min(minneapolis_2017$AGE) # minimum value
+max(minneapolis_2017$AGE) # maximum value
+```
+
+### Quartile
+
+```{r}
+x <- quantile(minneapolis_2017$AGE)
+x # list of quartiles
+x[2] # select the value by its index
+```
+
+You could add value from 0 to 1 in the ``quantile()`` to find a specific value, for example, 40%.
+
+```{r}
+quantile(minneapolis_2017$AGE, 0.4) # 40% of the dataset
+```
+
+
+## Linear regression
+
+Before we start, let's review some related knowledge first.
+
+Regression is used to examine the linear relationships between dependent variable and independent variables, where dependent variable is the one to be explained and independent variables (also called regressors, predictors, explanatory variables) are those may have influences on the dependent variable. For example, the dependent variable is personal income, and the independent variables are education, gender, age, *etc*. Among those independent variables, there are two types, one is continuous variable and the other is categorical variable (including dummy variable). Continuous variable is variable with continuous values, such as income and age. Categorical variable contains levels of values, which are not continuous. Dummy variable is variable with two levels of values. For example, gender, and people could use 1 for male, and 0 for female.
+
+Suppose we have a dependent variable $Y$, and two independent variables $X_1$ and $X_2$, the regression model in assumption could be expressed as below,
+
+$$Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \epsilon$$.
+
+Where, $\beta_0$ is the intercept, $\beta_1$ and $\beta_2$ are coefficients for $X_1$ and $X_2$, $\epsilon$ is the error term which is the part of the dependent variable which cannot be explained by the intercept and independent variables. Linear regression is to estimate the value of $\beta_0$, $\beta_1$, and $\beta_2$, and test their significance. The coefficients for the independent variables stand for that if the independent variable change one unit, the dependent variable will change the amount same with the value of the corresponding coefficient.
+
+The estimated model could be expressed as,
+
+$$\hat{Y} = \hat{\beta_0} + \hat{\beta_1}X_1 + \hat{\beta_2}X_2$$
+
+Those variables with hat are estimated variables.
+
+While regression provides the estimated values of intercepts and coefficients, it also provides the significance of these estimates with p-values. When p-value is smaller, the estimates tend to be more significant. In R, the function will use some marks to indicate the significance levels. The significance level is the probability that the estimates are ``true``.
+
+| Mark | Descriptions of significance level |
+|------|------------------------------------|
+| .    | 90%                                |
+| *    | 95%                                |
+| **   | 99%                                |
+| ***  | 99.9%                              |
+
+To quantify the fitness of the model, we use $R^2$ with a value from 0 to 1. When $R^2$ is close to 1, the model fits the dataset better. $R^2$ has a property that when adding more independent variables in the regression model, the $R^2$ will increase. There is another index called adjusted $R^2$, which considers the number of variables in the models.
+
+Our example is the Minneapolis ACS population dataset, and we want to explore the relationship between ``EDUC`` (Education level) and ``AGE`` (Age). Let's draw a scatter plot to see their distribution.
+
+```{r message = F}
+ggplot(minneapolis_2017, aes(AGE, EDUC)) +
+  geom_point()
+```
+Because there are many overlapped points, we could add some noise to the positions of the points to help show all the points.
+
+```{r}
+ggplot(minneapolis_2017, aes(AGE, EDUC)) +
+  geom_jitter(size = 0.5) ## add some noise to the positions of the points and set the size of the points to be 0.5
+```
+
+Based on the plot, it seems there is a positive relationship between these two variables. We add a linear line to fit the relationship with ``geom_smooth()``.
+
+```{r}
+ggplot(minneapolis_2017, aes(AGE, EDUC)) +
+  geom_jitter(size = 0.5) +
+  geom_smooth(method = 'lm')
+```
+
+To quantify this linear relationship, We could use ``lm()`` function to fit this linear relationship and use ``summary()`` function to see the result. In the function, the formula indicates the model in assumption. Here, our model in assumption is, 
+
+$$EDUC = \beta_0 + \beta_1 \times AGE + \epsilon$$
+
+When we code this model in R, we do 
+
+```
+EDUC ~ AGE
+```
+
+We only need to write down the variable names of the dependent variable and independent variables, and use ``~`` to connect them. No need to write the intercept and error term.
+
+We also need to indicate the name of the dataset in the function.
+
+```{r}
+lm_fit <- lm(EDUC ~ AGE,      # formula
+             data = minneapolis_2017) # dataset
+summary(lm_fit)             # check result
+```
+
+The summarized result provides details about the model results, such as the coefficients and p-values, the model's $R^2$, *etc.*
+
+Based on the information, we could know that the estimated coefficient for the intercept is 4.04, its p-value is $< 2e-16$ with a mark $***$, showing it is significant at 99.9% level. The estimated coefficient for ``AGE`` is 0.08, its p-value is $<2e-16$ with a mark $***$, showing it is significant at 99.9% level.
+
+We could also know the $R^2$ is 0.224, and adjusted $R^2$ is 0.2237.
+
+We could use the codes below to check the $R^2$ of the model directly.
+
+```{r}
+summary(lm_fit)$r.squared   # value of R2
+```
+
+And get the values of the coefficients directly.
+
+```{r}
+coefficients(lm_fit)        # only check the coefficient
+```
+
+The model can be improved. From the scatter plot between ``EDUC`` and ``AGE``, many respondents get to their highest level of education before the age of 25. After 25, ``AGE`` has trivial influence on ``EDUC``. We, then, are interested in the relationship before the age of 25.
+
+```{r}
+minneapolis_age <- filter(minneapolis_2017, AGE <= 25)
+
+ggplot(minneapolis_age, aes(AGE, EDUC)) +
+  geom_jitter(size = 0.5) +
+  geom_smooth(method = 'lm')
+```
+
+```{r}
+lm_fit <- lm(EDUC ~ AGE, 
+             data = minneapolis_age)
+summary(lm_fit) 
+```
+The model provides better fitness to the dataset now.
+
+Most of the time, we need to examine the relationship between the dependent variable and more than one independent variable. The example below examines the relationship between ``EDUC`` and ``AGE``, ``SEX``, and ``RACE``. 
+
+Education level and age.
+
+```{r}
+ggplot(minneapolis_2017, aes(AGE, EDUC)) +
+  geom_jitter(size = 0.5)
+```
+
+Education level and gender.
+
+```{r}
+ggplot(minneapolis_2017, aes(factor(SEX), EDUC)) +
+  geom_boxplot()
+```
+
+Education level and racial group.
+
+```{r}
+ggplot(minneapolis_2017, aes(factor(RACE), EDUC)) +
+  geom_boxplot()
+```
+
+When there is more than one independent variables, we use ``+`` to connect them in the formula. ``RACE`` and ``SEX`` are both categorical variables, so we transform it to factors. 
+
+```{r}
+mlm_fit <- lm(EDUC ~ AGE + factor(SEX) + factor(RACE),
+          minneapolis_2017)
+summary(mlm_fit)
+summary(mlm_fit)$r.squared
+```
+
+Without careful research design, the relationships fitted by the regression model are all correlations, not causalities.
+
+## Logistic regression
+
+The above two examples both use continuous variables as their dependent variables. How about using a binomial variable (i.e., dummy variable, 0 or 1 as its value) a dependent variable? Then we need to do logistic regression. There are many functions to well accomplish this. When interpreting the coefficients of the logistic regression result, the coefficient stands for the change of the log odds of the dependent variable to 1.
+
+```{r}
+## create a variable to indicate the poverty status of the respondents
+minneapolis_poverty <- minneapolis_2017 %>% 
+  filter(!is.na(INCTOT)) %>% 
+  mutate(poverty = ifelse(INCTOT <= 12228, 1, 0))
+```
+
+Poverty level and age.
+
+```{r}
+ggplot(minneapolis_poverty, aes(AGE, fill = factor(poverty))) +
+  geom_histogram()
+```
+
+Poverty and education level.
+
+```{r}
+ggplot(minneapolis_poverty, aes(EDUC, fill = factor(poverty))) +
+  geom_bar()
+```
+
+Poverty and gender.
+
+```{r}
+ggplot(minneapolis_poverty, aes(SEX, fill = factor(poverty))) +
+  geom_bar()
+```
+
+Poverty and racial group.
+
+```{r}
+ggplot(minneapolis_poverty, aes(RACE, fill = factor(poverty))) +
+  geom_bar()
+```
+
+
+Here, we introduce the ``glm()`` function. We need to indicate ``family = binomial`` in the function.
+
+```{r}
+## logistic regression
+logit_reg <- glm(poverty ~ AGE + EDUC + factor(SEX) + factor(RACE),
+                 minneapolis_poverty,
+                 family = binomial)
+summary(logit_reg)
+```
+
+
+Most of the information is similar with regression ones except that the logistic regression does not have $R^2$ and adjusted $R^2$. It uses ``AIC`` (Akaike information criterion) in indicate the goodness of the model. If one model has a smaller AIC, it is better.
+
