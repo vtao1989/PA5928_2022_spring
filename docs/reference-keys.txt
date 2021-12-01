@@ -104,3 +104,4 @@ proposal-of-problem-statement
 potential-data-sources
 final-submission
 references
+course-schedule

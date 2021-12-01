@@ -60,7 +60,7 @@ Weekly assignment grading rubric
 | Necessary notes to indicate the general idea (usage, function, purpose, or mechanism)    | 3      |
 | Codes and notes are neat and well-organized                                              | 1      |
 
-## Course schedule (Tentative)
+## Course schedule
 
 | Week       | Date   | Topic                                         |
 |------------|--------|-----------------------------------------------|
