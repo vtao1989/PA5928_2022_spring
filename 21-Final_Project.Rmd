@@ -12,7 +12,7 @@ To accomplish the final project, you need to finish two tasks.
 
 |   | Task          | Descriptions                                             | Due Date |
 |:-:|---------------|----------------------------------------------------------|----------|
-| 1 | Proposal      | Your research question and data source introduction      | Apr 19   |
+| 1 | Proposal      | Your research question and data source introduction      | Apr 18   |
 | 2 | Poster        | A poster representing your analysis result               | May 10   |
 
 

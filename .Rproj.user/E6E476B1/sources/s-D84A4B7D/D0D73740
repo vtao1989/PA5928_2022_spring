@@ -3,7 +3,7 @@
     "path": "C:/UMN/Course/PA_5928_0/PA5928_2022_spring/21-Final_Project.Rmd",
     "project_path": "21-Final_Project.Rmd",
     "type": "r_markdown",
-    "hash": "3686598552",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1638391011547.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "14,90",
+        "cursorPosition": "17,0",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1638391081,
+    "lastKnownWriteTime": 1638392320,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1638391081719,
+    "last_content_update": 1638392320755,
     "read_only": false,
     "read_only_alternatives": []
 }
