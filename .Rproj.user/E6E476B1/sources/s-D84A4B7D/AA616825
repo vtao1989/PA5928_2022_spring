@@ -3,7 +3,7 @@
     "path": "C:/UMN/Course/PA_5928_0/PA5928_2022_spring/README.md",
     "project_path": "README.md",
     "type": "markdown",
-    "hash": "274130964",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1638389705806.0,
@@ -11,7 +11,9 @@
     "relative_order": 1,
     "properties": {
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "0,0",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1638391223,
