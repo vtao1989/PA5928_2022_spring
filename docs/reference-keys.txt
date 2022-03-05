@@ -105,3 +105,14 @@ potential-data-sources
 final-submission
 references
 course-schedule
+covid
+safe-campus-covid-19-response
+student-conduct-code
+scholastic-dishonesty
+sexual-harassment-sexual-assault-stalking-and-relationship-violence
+equity-diversity-equal-opportunity-and-affirmative-action
+disability-accommodations
+mental-health-and-stress-management
+tennessen-warning-notice-pursuant-to-mn-department-of-administrations-data-practices
+other-university-policies
+univeristy-policies
