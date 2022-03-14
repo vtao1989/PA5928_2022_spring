@@ -16,7 +16,6 @@ Before learning R, we need to know why we use R and why we do not use R.
 * More algorithms, packages, and implementations of econometrics
 * Faster
 * It is supported by Statacorp so the result is reliable
-* It presents results in a clear format
 * Syntax is simple and standard for most data analysis
 * Help document is formal
 
@@ -24,7 +23,7 @@ Besides those advantages, they have a lot of overlaps with each other. People ca
 
 ## Variable name
 
-A variable is used to store data including value, vector, data frame, etc., which R could use to manipulate [@tutorialspoint2]. This chapter introduces variable types, operations between variables, data structures, conditional statements, loops, and functions.
+A variable is used to store data including value, vector, data frame, etc., which R could use to manipulate [@tutorialspoint2]. 
 
 Before we start, let's first see how to name a variable. The valid variable name could be constructed with letters, numbers, the dot character (``.``), and underline character (``_``). Besides that, a valid variable name should start with a letter or the dot character not followed by a number. Below are some examples of variable names (either good or not good).
 
@@ -76,7 +75,7 @@ v <- 1 + 4i
 class(v)
 ```
 
-It is important to clearly know the type of the variable since different types of variables may have different functions or operations to deal with. Another caveat is that the outlook of the variable may not show its real variable type. For example, a common situation is listed below.
+It is important to clearly know the type of the variable since different types of variables may have different functions or operations to deal with. Another caveat is that the outlook of the variable may not show its real variable type. For example, 
 
 ```{r}
 v <- "59.28"
@@ -265,7 +264,7 @@ a[1, ] # the 1st row
 
 **Data frame**
 
-Data frame is a **frequently-used** data type in R. It could include columns with different types of values stored in them. Let's create a data frame with mixed variables types using ``data.frame()`` function.
+Data frame is a **frequently-used** data structure in R. It could include columns with different types of values. Let's create a data frame with mixed variables types using ``data.frame()`` function.
 
 ```{r}
 ID <- c(1:4) # create ID
@@ -275,7 +274,7 @@ df <- data.frame(ID, Name, Score) # combine the variables into one data frame ca
 df
 ```
 
-We created a data frame storing the students' ID, name, and their test scores. We can select elements from this data frame with couple of ways.
+We created a data frame storing the students' ID, name, and their test scores. We can select elements from this data frame with several ways.
 
 ```{r}
 df[2,3] # 2nd row and 3rd column
@@ -308,7 +307,7 @@ Someone might be confusing since list looks similar to data frame. [Here](https:
 
 **Factor**
 
-Factor is the nominal variable in R. This type will be very useful when we want to analyze data from different groups, such as gender, school, etc.
+Factor is the nominal variable in R. This type is very useful when we want to analyze data from different groups, such as gender, school, etc.
 
 ```{r}
 a <- c(1, 2, 1, 2, 3, 3, 1, 1)
@@ -395,7 +394,7 @@ for (i in 5:10) {
 
 ## Functions
 
-Functions are codes that have been defined with specific usage. You only need to input some necessary variables and functions will do the tasks. To use function, you start with the name of the function followed with a pair of parentheses. Then, you input some arguments in the parentheses to give instructions to the function. For example, ``sum()`` function could help you add the all the numbers together in a vector or data frame and return the result.
+Functions are codes that have been defined with specific usage. You only need to input some necessary arguments and functions will do the tasks. To use function, you start with the name of the function followed with a pair of parentheses. Then, you input some arguments in the parentheses to give instructions to the function. For example, ``sum()`` function could help you add the all the numbers together in a vector or data frame and return the result.
 
 ```{r}
 sum(c(1, 4, 10, 5))
@@ -420,6 +419,17 @@ mean(data, na.rm = TRUE)
 ```
 
 ``na.rm`` tells the function whether missing values should be removed during the calculation. Its default value is ``FALSE``, which means that the missing values should not be removed. Calculating the average of a list of numbers containing missing value will return a missing value. That's why we get ``NA`` from our first try. In our second try, we set the value of ``na.rm`` to ``TRUE``. The function removes the missing values and we have the correct result in our second try.
+
+Let's say the left hand side component of the argument is called the name of the argument, and the right hand side component is the value of the argument. If we specify the argument in its original position, then we only need to input the value of the argument.  This is called positional matching. If we specify the argument in a different position, then we need to input both the name and the value of the argument.  This is called complete matching.
+
+```{r}
+## Positional matching
+mean(data, 0, TRUE)
+
+## Complete matching
+mean(data, na.rm = TRUE)
+```
+
 
 It is important to use the right function to do the right task. To do this, you have to be familiar with the functions you are using. It needs more practice.
 

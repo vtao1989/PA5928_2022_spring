@@ -13,7 +13,7 @@ description: "This is the website for couse PA 5928 in the University of Minneso
 
 ## Course description
 
-Introduction to ``RStudio`` software. Use of ``RStudio`` to carry out ``R`` file and related dataset management functions. Tools and techniques for data analysis and statistical programming in quantitative research or related applied areas. Topics include data selection, data manipulation, and data visualization (including charts, plots, histograms, maps, and other graphs).
+Introduction to ``RStudio`` software. Use of ``RStudio`` to carry out ``R`` file and related dataset management functions. Tools and techniques for data analysis and statistical programming in quantitative research or related applied areas. Topics include data selection, data manipulation, and data visualization (including charts, plots, histograms, and other graphs).
 
 ## Course prerequisites
 
@@ -25,7 +25,7 @@ Introductory statistics; ability to create bar graphs, line graphs, and scatter 
 **Instructor**: Tao Tao, taotao@umn.edu  
 **Location**: HHH 85 Lab  
 **Office hour**: 3:45-4:15 Tuesday and Thursday (HHH 295 Cube 2) or by appointment  
-**Canvas**: All course notes will be posted in this course website, but links will be updated on Canvas simultaneously. Canvas will also be used to submit your assignments, final project, and grades. Make sure you have enabled the notification of this course on Canvas.
+**Canvas**: All course notes will be posted in this course website, but links will be updated on Canvas simultaneously. Canvas will also be used to submit your assignments and final project. Make sure you have enabled the notification of this course on Canvas.
 
 ## Course learning outcomes
 
@@ -90,7 +90,7 @@ Weekly assignment grading rubric
 
 ### Safe Campus COVID-19 Response
 
-The University of Minnesota currently requires all students, staff, and faculty to wear masks when indoors regardless of vaccination status.  Students are recommended to sit in the same seat throughout the course to enhance contact tracing should it be necessary.  Please do not eat in the classroom and lab; it is fine to drink water occasionally.  Please stay at home if you experience symptoms of COVID-19 and consult with your healthcare provider about an appropriate course of action. An absence due to symptoms of COVID-19 is an excused absence, and I will work with you to find the best course of action for missed work and/or class experiences.
+The University of Minnesota currently requires all students, staff, and faculty to wear masks when in classrooms regardless of vaccination status.  Students are recommended to sit in the same seat throughout the course to enhance contact tracing should it be necessary.  Please do not eat in the classroom and lab; it is fine to drink water occasionally.  Please stay at home if you experience symptoms of COVID-19 and consult with your healthcare provider about an appropriate course of action. An absence due to symptoms of COVID-19 is an excused absence, and I will work with you to find the best course of action for missed work and/or class experiences.
 
 https://safe-campus.umn.edu/return-campus/covid-19-updates
 
