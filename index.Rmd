@@ -17,7 +17,7 @@ Introduction to ``RStudio`` software. Use of ``RStudio`` to carry out ``R`` file
 
 ## Course prerequisites
 
-Introductory statistics; ability to create bar graphs, line graphs, and scatter plots in MS Excel; and familiarity with principles of data visualization.
+Introductory statistics; ability to understand bar graphs, line graphs, and scatter plots; and familiarity with principles of data visualization.
 
 ## Logistics
 
