@@ -1,17 +1,17 @@
 # Data Manipulation with Base Functions
 
-We will introduce how to manipulate with different datasets using base functions in R.
+We will introduce how to manipulate with different datasets using base (i.e., inbuilt) functions in R.
 
 ## Import and save datasets
 
-There couple of ways to importing and saving different types of datasets [@quickr1;@quickr2].
+There are couple of ways to importing and saving different types of datasets [@quickr1;@quickr2].
 
 ### Import data from commonly-used file types
 
 **CSV file**
 ```{r, eval=FALSE}
 mydata <- read.csv('c:/minneapolis.csv', ## file location and name
-                   header = TRUE, ## read the first 
+                   header = TRUE, ## read the first line as variable names
                    sep = ',') ## which type of separation
 ```
 
@@ -32,7 +32,7 @@ Below is an easy way to load datasets in RStudio.
 
 **System tool**
 
-Besides importing data by codes, you could also import data with the system tool. If this is your first time to use this tool, there may be a process to install the packages depending your options. But don't worry, RStudio can do it by itself. You just need to click the button to approve the installation.
+Besides importing data by codes, you could also import data with the system tool. If this is your first time to use this tool, there may be a process to install the packages. But don't worry, RStudio can do it by itself. You just need to click the button to approve the installation.
 
 ```
 File -> Import dataset -> choose the type of dataset you want to import
@@ -59,13 +59,13 @@ library(foreign)
 write.dta(mydata, "c:/mydata.dta")
 ```
 
-Usually, it takes less time to save file in CSV and CSV file has a smaller size in storage. Note that if you do not specify file location when saving it, R will save it to the working folder.
+Usually, it takes less time to save file in CSV and CSV file has a smaller size in storage, compared with other file types. Note that if you do not specify file location when saving it, R will save it to the working folder.
 
 ### File location
 
-As you can see in the examples, you need to specify the location (or path) of the file to make sure that R could find your file in the right position. Usually you could find the location by checking the system property of the file. In window system, you need to use forward slash ``/`` to separate the locations. However, in Mac system, you use back slash ``\``.
+As you can see in the examples, you need to specify the location (or path) of the file to make sure that R could find your file in the right position. Usually you could find the location by checking the system property of the file. In window system, you need to use forward slash ``/`` to separate the locations. However, in Mac system, you use backslash ``\``.
 
-Inputting file location could be tedious, but you could avoid this. Here is how. First, put your R file and dataset in the same folder. Then start the R file by double clicking it. R will use the folder where the R file locates as the working folder. In this way, you can only specify the name of the dataset when importing it.
+Inputting file location could be tedious, but you could avoid this. Here is how. First, put your R file and dataset in the same folder. Then open the R file by double clicking it. R will use the folder where the R file locates as the working folder. In this way, you can only specify the name of the dataset when importing it.
 
 This is highly recommended. It would be easier for others to check your codes as they do not need to change the path of the file.
 
@@ -133,12 +133,12 @@ You could also view the data in the new window by ``View()`` function. Please pa
 View(minneapolis)
 ```
 
-View the first ten observations (rows) in the dataset. <dbl> stands for double class, which is a sub-type of numerical variable type.
+View the first ten observations (rows) in the dataset. ``<dbl>`` stands for double class, which is a sub-type of numerical variable type.
 ```{r}
 head(minneapolis, n = 10)
 ```
 
-view the last five observations in the dataset.
+View the last five observations in the dataset.
 
 ```{r}
 tail(minneapolis, n = 5)

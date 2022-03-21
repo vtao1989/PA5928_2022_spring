@@ -18,7 +18,7 @@ library(dplyr)
 minneapolis <- read.csv('minneapolis.csv')
 ```
 
-If we want to select one or more columns (i.e., variables) from the dataset. We could use ``select()`` in ``dplyr``. It is similar to ``subset()`` , but here, you do not need to use ``select = c('mpg', 'disp')``. You use the names of the columns directly in the function.
+If we want to select one or more columns (i.e., variables) from the dataset. We could use ``select()`` in ``dplyr``. It is similar to ``subset()`` , but here, we do not need to use ``select = c('mpg', 'disp')``. We use the names of the columns directly in the function.
 
 ```{r}
 df <- select(minneapolis, # name of the data frame
@@ -36,9 +36,9 @@ head(df, 3)
 
 **pipe**  
 
-The codes above is kind of a *traditional* way to do the work. We start with a function and put parameters in the function. However, this is not the typical way to use ``dplyr``.
+The codes above is kind of a *traditional* way to do the work. We start with a function and put arguments in the function. However, this is not the typical way to use ``dplyr``.
 
-The codes below is a more ``dplyr`` way people use the package. We start with the name of the data frame. Then, we put a special sign ``%>%`` called ``pipe`` after it. We continue from a new line and write the function we want to use. Besides that, we could add more functions with the pipe operator. For example, only show first three observations with ``head()``.
+The codes below is a more ``dplyr`` way to use the package. We start with the name of the data frame. Then, we put a special sign ``%>%`` called ``pipe`` after it. We continue from a new line and write the function we want to use. Besides that, we could add more functions with the pipe operator. For example, only show first three observations with ``head()``.
 
 ```{r}
 minneapolis %>% # name of the data frame
@@ -46,7 +46,7 @@ minneapolis %>% # name of the data frame
   head(3)
 ```
 
-The original codes include more (see below). When comparing the codes above and below, you will find that original codes use ``.`` as the input of the data frame in the function. However, for easy coding, this ``.`` could be omitted if it is in the starting position among the input parameters in the functions. In other words, if this ``.`` is not in the starting position, it cannot be omitted.
+The original codes include more (see below). When comparing the codes above and below, you will find that original codes use ``.`` as the input of the data frame in the function. However, for easy coding, this ``.`` could be omitted if it is in the starting position among the input arguments in the functions. In other words, if this ``.`` is not in the starting position, it cannot be omitted.
 
 ```{r}
 minneapolis %>% 
@@ -54,7 +54,7 @@ minneapolis %>%
   head(., 3)
 ```
 
-You can also write the codes in only one line, just like the codes below. However, **it is recommended to write codes with one function in one line to improve the readiness of the codes**.
+You can also write the codes in only one line, just like the codes below. However, **it is recommended to write codes with one function in one line to improve the readiness**.
 
 ```{r}
 minneapolis %>% select(YEAR, SEX, AGE) %>% head(3)
@@ -94,7 +94,7 @@ minneapolis %>%
 
 Below are some advanced techniques to select columns.
 
-You can select the column with their names starting with the string(s) you specify in ``starts_with()``. For example, the codes below select the columns with names starting with ``E``.
+You can select the column with their names starting with the string(s) you specify in ``starts_with()``. For example, the codes below select the columns with their names starting with ``E``.
 
 ```{r}
 minneapolis %>% 
@@ -212,7 +212,7 @@ minneapolis %>%
   head(10)
 ```
 
-You can use ``ifelse()`` to change the value satisfying the specified condition. ``if_else()`` works but is more strict in variable types. See its help page for more information.
+You can use ``ifelse()`` to change the value satisfying the specified condition. ``if_else()`` works for the same purpose but is more strict in variable types. See its help page for more information.
 
 ```{r}
 minneapolis %>% 
@@ -227,7 +227,7 @@ If you have more than one conditions, you can use ``case_when()``.
 ```{r}
 minneapolis %>% 
   mutate(
-    RACE = case_when( ## change RACE from numeric values to racial categories
+    RACE = case_when( ## change RACE from numeric values to categories
       RACE == 1 ~ 'White',
       RACE == 2 ~ 'African American',
       RACE == 3 ~ 'Other'
@@ -242,7 +242,7 @@ minneapolis %>%
     IncLevl = case_when( ## categorize personal income into three levels
       INCTOT < median(INCTOT, na.rm = T) ~ 'Low income',
       INCTOT > median(INCTOT, na.rm = T) ~ 'High income',
-      TRUE ~ 'Median income'
+      TRUE ~ 'Median income' ## other cases
     )
   ) %>% 
   head(5)
@@ -342,7 +342,7 @@ minneapolis %>%
   head(10)
 ```
 
-Sometimes, people from different groups may give the same variables with different variable names. In this case, you may need to change the codes a little bit.
+Sometimes, different datasets may give the same variables with different variable names. In this case, you may need to change the codes a little bit.
 
 ```{r}
 minneapolis %>% 
@@ -351,7 +351,7 @@ minneapolis %>%
   head(10)
 ```
 
-``rename()`` can help rename the column name in the data frame.
+``rename()`` can rename the column name in the data frame.
 
 ## pivot_wider() and pivot_longer() in tidyr
 
