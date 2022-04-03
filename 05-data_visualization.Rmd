@@ -1,6 +1,6 @@
 # Data Visualization with Base Functions
 
-We go through the base plotting functions in R in this chapter.
+In this chapter, we go through the base plotting functions in R.
 
 ```{r}
 ## import the Minneapolis ACS dataset
@@ -16,7 +16,7 @@ Scatter plot is a good way to show the distribution of data points.
 plot(minneapolis$AGE, minneapolis$INCTOT) # with first as x, and second as y
 ```
 
-Or, you could use the variable names directly and indicate the dataset as the codes below. You will get the same result.
+Or, you could use the variable names directly and indicate the dataset.
 
 ```{r}
 plot(INCTOT ~ AGE, data = minneapolis) # you have to specify the name of the data frame here
@@ -25,7 +25,7 @@ plot(INCTOT ~ AGE, data = minneapolis) # you have to specify the name of the dat
 
 ## Line plot
 
-You could transfer the scatter plot above to a line plot by just adding a ``type`` variable to indicate that you are plotting a line. Line plot is good for presenting the trend of a variable changing by time.
+You could transfer the scatter plot to a line plot by just adding a ``type`` variable to indicate that you are plotting a line. Line plot is good for presenting the trend of a variable changing by time.
 
 ```{r}
 library(dplyr)
@@ -38,7 +38,7 @@ plot(AvgInc ~ YEAR,
      type = 'l') ## type indicates the line type with l
 ```
 
-You could also choose another type by changing the value of ``type``, as the one below.
+You could also choose another type by changing the value of ``type``.
 
 ```{r}
 plot(AvgInc ~ YEAR,
@@ -50,7 +50,7 @@ You could use ``help(plot)`` to check more styles of the plots.
 
 ## Bar plot
 
-Bar plot is a good way to compare the values in each year or for each item. You could use ``barplot()`` to draw it.
+Bar plot is a good way to compare the values in each year or for each item. You could use ``barplot()`` to make a bar plot.
 
 ```{r}
 barplot(mean_income$AvgInc,
@@ -104,7 +104,8 @@ boxplot(t, range = 0) # set range = 0 makes the whiskers reach the smallest and 
 
 ```{r}
 t <- c(1, 5, 10, 7, 8, 10, 11, 19)
-boxplot(t, range = 1) # set range = 1 makes the the whiskers extend to the most extreme data point which is no more than range times the interquartile range from the box
+boxplot(t, range = 1) # set range = 1 makes the the whiskers extend to the most extreme data point 
+# which is no more than range times the interquartile range from the box
 ```
 
 ## Color in R

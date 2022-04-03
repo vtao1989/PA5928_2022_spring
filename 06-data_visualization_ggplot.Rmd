@@ -20,7 +20,7 @@ We have grammar for languages. Similarly, we have grammar for graphics. That's w
 | Coordinates | The space on which the data will be plotted.      |
 | Themes      | All non-data ink.                                 |
 
-Let's take the codes below as an example to show how different elements work in ``ggplot2``. Then, we might have an idea what is each element and how does it work.
+Let's take the codes below as an example to show how different elements work in ``ggplot2``.
 
 Firstly, we need to import the packages and the Minneapolis ACS dataset. We will use ``dplyr`` to wrangle the dataset.
 
@@ -49,7 +49,7 @@ The figure shows the scatter plots of age and personal income in the city of Min
 
 Generally, if you want to draw figures with ``ggplot2``, you need at least three elements, which are data, aesthetics, and geometries. Data is the dataset we want to visualize. Aesthetic specifies how to map the variables to the scales in plots. Geometry indicates the plot type and related attributes. Take the example above again. We want to visualize the variables of ``AGE`` and ``TOTINC`` (aesthetic) of the dataset ``minneapolis`` (data, the Minneapolis ACS dataset) with a scatter plot (geometry). In summary,
 
-Similar to ``dplyr``, ``ggplot2`` also has its own fashion of coding. We start with the ``ggplot()`` function. **Please pay attention that there is no ``2`` in the name of the function**. In the function, we first indicate the name of the dataset (usually a data frame). Then we use ``aes()`` to indicate the scales we want to map our data. Here, we map ``AGE`` to x axis, and ``TOTINC`` to y axis. Then we use a plus sign ``+`` to connect it to other functions. We are going to draw a scatter plot, so we use ``geom_point()``. We only use a 2017 subsample from the Minneapolis ACS dataset. Note that the observations with missing values have been removed during plotting (that's why we have a warning message).
+Similar to ``dplyr``, ``ggplot2`` also has its own style of coding. We start with the ``ggplot()`` function. **Please pay attention that there is no ``2`` in the name of the function**. In the function, we first indicate the name of the dataset (usually a data frame). Then we use ``aes()`` to indicate the scales we want to map our data. Here, we map ``AGE`` to x axis, and ``TOTINC`` to y axis. Then we use a plus sign ``+`` to connect it to other functions. We are going to draw a scatter plot, so we use ``geom_point()``. We only use a 2017 subsample from the Minneapolis ACS dataset. Note that the observations with missing values have been removed during plotting (that's why we have a warning message).
 
 ```{r}
 ## select a subsample of those in 2017
@@ -99,16 +99,16 @@ ggplot(minneapolis_emp, aes(AGE, INCTOT, col = EMPSTAT)) +
   geom_point()
 ```
 
-``EMPSTAT`` stands for the employment status (employed, not in labor force, unemployed). R usually treats variables with characteristic values as factor. ``ggplot2`` uses different colors to stand for different employment status. By reading the plot, we know that as age increases, more people are not in labor force. The personal income of employed people are higher than those not in labor force. (There are not many unemployed observations in this dataset, so it is hard to tell its pattern.)
+``EMPSTAT`` stands for the employment status (employed, not in labor force, unemployed). ``ggplot2`` usually treats variables with characteristic values as factor. ``ggplot2`` uses different colors to stand for different employment status. By reading the plot, we know that as age increases, more people are not in labor force. The personal income of employed people are higher than those not in labor force. (There are not many unemployed observations in this dataset, so it is hard to tell its pattern.)
 
-Besides ``color``, there are several other scales can be used in plots. Continuous variable and categorical variable will generate different results when being mapped to these scales. Usually, color and shape work well with categorical variables. Size works well for continuous variables. But it still depends on the dataset you are dealing with. The best practice is always try it for yourself.
+Besides ``color``, there are several other scales can be used in plots. Continuous variable and categorical variable will generate different results when being mapped to these scales. Usually, color and shape work well with categorical variables. Size works well for continuous variables. But it still depends on the dataset you are dealing with. The best practice is always trying it for yourself.
 
 | Scales | Description                             | Continuous variable | Categorical variable |
 |-----------|-----------------------------------------|---------------------|----------------------|
-| x         | x axis position                         | ✓                   |                      |
+| x         | x axis position                         | ✓                   | ✓                    |
 | y         | y axis position                         | ✓                   |                      |
 | size      | Diameter of points, thickness of lines  | ✓                   |                      |
-| alpha     | Transparency                            | ✓                   | ✓                    |
+| alpha     | Transparency                            | ✓                   |                      |
 | color     | Color of dots, outlines of other shapes | ✓                   | ✓                    |
 | fill      | Fill color                              | ✓                   | ✓                    |
 | labels    | Text on a plot or axes                  |                     | ✓                    |
@@ -129,7 +129,7 @@ ggplot(minneapolis_2017, aes(AGE, INCTOT)) +
 
 Note that setting the value of alpha helps you recognize the density of the points in scatter plots. The plot above shows that the respondents are more distributed in the younger group.
 
-Geometry has many different types. For examples, ``geom_point()`` for scatter plot, ``geom_bar()`` for bar plot, ``geom_boxplot()`` for box plot, *etc*. Most functions of geometries are self-explained, so you could tell what their usages easily. We all talk about those commonly used geometries such as scatter plot, bar plot, line plot, *etc* in the following parts.
+Geometry has many different types. For examples, ``geom_point()`` for scatter plot, ``geom_bar()`` for bar plot, ``geom_boxplot()`` for box plot, *etc*. Most functions of geometries are self-explained, so you could understand their usages easily. We will talk about those commonly used geometries such as scatter plot, bar plot, line plot, *etc* in the following parts.
 
 ### Scatter plot
 

@@ -18,7 +18,7 @@ To accomplish the final project, you need to finish two tasks.
 
 ## Proposal of problem statement
 
-In this task, you will need to submit the proposal file (either word or pdf). The instructor will give you feedback but will not grade this part. The rubric is just for helping you check the requirements. See the canvas for a template of the proposal.
+In this task, you will submit the proposal file (either word or pdf). The instructor will give you feedback but will not grade this part. The rubric is just for helping you check the requirements. See the canvas for a template of the proposal.
 
 | Requirements                                                                                                              |
 |---------------------------------------------------------------------------------------------------------------------------|
