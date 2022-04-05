@@ -30,7 +30,7 @@ The proposal should be less than one page, 12 font size.
 
 ## Potential data sources
 
-1. [IMPUS USA](https://usa.ipums.org/usa/)  
+1. [IPUMS USA](https://usa.ipums.org/usa/)  
 2. [National Household Travel Survey](https://nhts.ornl.gov/)
 3. [Minnesota Geospatial Commons](https://gisdata.mn.gov/)
 4. [Open Minneapolis](https://opendata.minneapolismn.gov/)
