@@ -37,7 +37,7 @@ The proposal should be less than one page, 12 font size.
 
 ## Final submission
 
-In this part, **you will submit your data file, revised codes (R file), and the poster (PDF file)**. The instructor will grade them based on the rubric below.
+In this part, **you will submit your data file, codes (R file), and the poster (PDF file)**. The instructor will grade them based on the rubric below.
 
 The poster  
 

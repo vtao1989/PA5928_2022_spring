@@ -172,7 +172,7 @@ Regression is used to examine the linear relationships between dependent variabl
 
 Suppose we have a dependent variable $Y$, and two independent variables $X_1$ and $X_2$, the regression model in assumption could be expressed as below,
 
-$$Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \epsilon$$.
+$$Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \epsilon$$
 
 Where, $\beta_0$ is the intercept, $\beta_1$ and $\beta_2$ are coefficients for $X_1$ and $X_2$, $\epsilon$ is the error term which is the part of the dependent variable which cannot be explained by the intercept and independent variables. Linear regression is to estimate the value of $\beta_0$, $\beta_1$, and $\beta_2$, and test their significance. The coefficients for the independent variables stand for that if the independent variable change one unit, the dependent variable will change the amount same with the value of the corresponding coefficient.
 
