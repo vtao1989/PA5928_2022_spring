@@ -39,7 +39,7 @@ After importing the dataset, usually you have to do some pre-processing before e
 minneapolis <- data %>% 
   zap_labels() %>%  ## remove labels from the data
   filter(CITY == 4150) %>% ## select the city of Minneapolis (city code is 4150)
-  mutate(RACE = ifelse(RACE >= 3, 3, RACE), ## select three racial groups
+  mutate(RACE = ifelse(RACE >= 3, 3, RACE), ## aggregate other racial groups into level 3
          INCTOT = ifelse(INCTOT == 9999999, NA, INCTOT), ## change missing value to NA
          FTOTINC = ifelse(FTOTINC %in% c(9999999, 999998), NA, FTOTINC)) %>%
   select(YEAR, SEX, AGE, RACE, HISPAN, EDUC, EMPSTAT, INCTOT, FTOTINC) ## select variables
